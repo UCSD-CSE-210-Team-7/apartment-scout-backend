@@ -1,0 +1,22 @@
+{
+  "name": "apartment-scout-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UCSD-CSE-210-Team-7/apartment-scout-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UCSD-CSE-210-Team-7/apartment-scout-backend/issues"
+  },
+  "homepage": "https://github.com/UCSD-CSE-210-Team-7/apartment-scout-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
