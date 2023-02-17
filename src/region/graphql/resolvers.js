@@ -5,7 +5,7 @@ const users = [{
             last_login: Date.now(),
             is_scout: true,
             is_requester: false,
-            regions: [1,2,3,4,5],
+            regions: [0,1,2,3,4,5],
             conversations: [{
                 conversation_id: 0,
                 person_a: "test@gmail.com",
@@ -32,7 +32,7 @@ const users = [{
             last_login: Date.now(),
             is_scout: true,
             is_requester: false,
-            regions: [1,2,3,4,5],
+            regions: [0,6,7,8,9,10],
             conversations: [{
                 conversation_id: 0,
                 person_a: "test@gmail.com",
@@ -55,68 +55,22 @@ const users = [{
         }];
 
 
-const User = {
-    conversations: (root, args, context, info) => {
-        console.log('user.conversations resolver')
-        // debugger;
-        // console.log(root, args, context, info.fieldNodes.find(field => field.name.value === info.fieldName).selectionSet.selections); 
-        return root.conversations
-    }
+const Region = {
 }
 
 const queries = {
-    users: (root, args, context, info) => {
-        console.log(info.schema)
-        const directives = info.schema.getType('User').astNode.fields.reduce(
-            (acc, val) => { 
-                acc[val.name.value] = val.directives.map(
-                    directive => ({
-                        name: directive.name.value,
-                        args: Object.assign({}, ...directive.arguments.map(argument => ({
-                            [argument.name.value]: argument.value.value
-                        }))),
-                    }) 
-                )
-                return acc
-            } , {}
-        )
-        const query = info
-            .fieldNodes
-            .find(field => field.name.value === info.fieldName)
-            .selectionSet
-            .selections
-            .filter(x => x.kind === 'Field')
-            .map(x => 
-                ({
-                    name: x.name.value,
-                    selectionSet: x && x.selectionSet && x.selectionSet.selections,
-                })
-            ).map(x => ({...x, directives: directives[x.name]}))
-        // console.log(query);
-        console.log('users resolver')
-        return users
+    region: (root, args, context, info) => {
+        return {
+            users: users.filter(i => i.regions.includes(args.zipcode))
+        }
     },
 };
 
 const mutations = {
-    createUser: (root, args) => {
-        const user = {
-            email: args.email,
-            name: args.name,
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: args.is_scout,
-            is_requester: args.is_requester,
-        };
-
-        users.push(user)
-
-        return user;
-    },
 };
 
 module.exports = { 
-    User, 
+    Region, 
     queries, 
     mutations 
 };

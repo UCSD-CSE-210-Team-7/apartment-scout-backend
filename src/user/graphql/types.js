@@ -1,4 +1,4 @@
-export const types = `
+const types = `
   type User {
     email: String
     name: String
@@ -6,5 +6,9 @@ export const types = `
     last_login: DateTime
     is_scout: Boolean
     is_requester: Boolean
+    regions: [Int]
+    conversations: [Conversation] @toOne(param: true, param2: "Hi")
   }
 `;
+
+module.exports = types

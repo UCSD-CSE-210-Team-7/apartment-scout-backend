@@ -1,5 +1,5 @@
 const queries = `
-  users: [User]
+  messages (conversation_id: Int): [Message]
 `;
 
 module.exports = queries

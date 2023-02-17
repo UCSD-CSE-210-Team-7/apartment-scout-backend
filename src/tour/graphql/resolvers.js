@@ -24,7 +24,21 @@ const users = [{
                 person_b: "test2@gmail.com",
                 last_msg: "Hi there",
                 last_msg_time: Date.now()
-            }]
+            }],
+            tours: [
+                {
+                    tour_id: 0,
+                    tour_address: "7699 Palmilla Drive La Jolla CA 92122",
+                    requested_by: undefined,
+                    scouted_by: undefined,
+                    date_requested: Date.now(),
+                    date_completed: Date.now(),
+                    status: "COMPLETE",
+                    tour_summary: "House sucks",
+                    tour_review_text: "Thanks",
+                    tour_review_stars: 5,
+                },
+            ]
         }, {
             email: "some.user2@email.com",
             name: "some user2",
@@ -51,72 +65,56 @@ const users = [{
                 person_b: "test2@gmail.com",
                 last_msg: "Hi there",
                 last_msg_time: Date.now()
-            }]
+            }],
+            tours: [
+                {
+                    tour_id: 1,
+                    tour_address: "9500 Gilman Drive San Diego CA 92092",
+                    requested_by: undefined,
+                    scouted_by: undefined,
+                    date_requested: Date.now(),
+                    date_completed: Date.now(),
+                    status: "COMPLETE",
+                    tour_summary: "House sucks",
+                    tour_review_text: "Thanks",
+                    tour_review_stars: 5,
+                },
+            ]
         }];
 
 
-const User = {
-    conversations: (root, args, context, info) => {
-        console.log('user.conversations resolver')
-        // debugger;
-        // console.log(root, args, context, info.fieldNodes.find(field => field.name.value === info.fieldName).selectionSet.selections); 
-        return root.conversations
-    }
+const Tour = {
 }
 
 const queries = {
-    users: (root, args, context, info) => {
-        console.log(info.schema)
-        const directives = info.schema.getType('User').astNode.fields.reduce(
-            (acc, val) => { 
-                acc[val.name.value] = val.directives.map(
-                    directive => ({
-                        name: directive.name.value,
-                        args: Object.assign({}, ...directive.arguments.map(argument => ({
-                            [argument.name.value]: argument.value.value
-                        }))),
-                    }) 
-                )
-                return acc
-            } , {}
-        )
-        const query = info
-            .fieldNodes
-            .find(field => field.name.value === info.fieldName)
-            .selectionSet
-            .selections
-            .filter(x => x.kind === 'Field')
-            .map(x => 
-                ({
-                    name: x.name.value,
-                    selectionSet: x && x.selectionSet && x.selectionSet.selections,
-                })
-            ).map(x => ({...x, directives: directives[x.name]}))
-        // console.log(query);
-        console.log('users resolver')
-        return users
+    tours: (root, args, context, info) => {
+        return users.find(i => i.email === args.user).tours
     },
 };
 
 const mutations = {
-    createUser: (root, args) => {
-        const user = {
-            email: args.email,
-            name: args.name,
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: args.is_scout,
-            is_requester: args.is_requester,
-        };
-
-        users.push(user)
-
-        return user;
+    createTour: (root, args) => {
+        const tour = {
+            tour_id: 1,
+            tour_address: args.address,
+            requested_by: users.find(i => i.email === args.requester),
+            scouted_by: users.find(i => i.email === args.scout),
+            date_requested: Date.now(),
+            date_completed: Date.now(),
+            status: "PLANNED",
+            tour_summary: "",
+            tour_review_text: "",
+            tour_review_stars: -1,
+        }
+        
+        tour.requested_by.tours.push(tour)
+        tour.scouted_by.tours.push(tour)
+        return tour
     },
 };
 
 module.exports = { 
-    User, 
+    Tour, 
     queries, 
     mutations 
 };

@@ -1,4 +1,4 @@
-export const mutations = `
+const mutations = `
   createUser(
     email: String!
     name: String!
@@ -6,3 +6,5 @@ export const mutations = `
     is_requester: Boolean!
   ): User
 `;
+
+module.exports = mutations

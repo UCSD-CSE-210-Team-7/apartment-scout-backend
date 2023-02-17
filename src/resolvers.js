@@ -1,15 +1,29 @@
-import { DateTimeResolver } from 'graphql-scalars';
-import user from './user/graphql/index.js';
+const { DateTimeResolver } = require('graphql-scalars');
+const imports = [
+    './user/graphql/index.js',
+    './conversation/graphql/index.js',
+    './region/graphql/index.js',
+    './tour/graphql/index.js',
+    './message/graphql/index.js',
+].map(i => require(i))
 
-const Query = { 
-    ...user.resolvers.queries,
-}
-const Mutation = {
-    ...user.resolvers.mutations,
-}
+const filterResolver = i => (
+    Object.fromEntries(
+        Object.entries(
+            i.resolvers
+        ).filter(
+            ([key]) => key != 'queries' && key != 'mutations'
+        )
+    )
+)
 
-export default {
+const allResolvers = Object.assign({}, ...imports.map(filterResolver))
+const Query = Object.assign({}, ...imports.map(i => i.resolvers.queries))
+const Mutation = Object.assign({}, ...imports.map(i => i.resolvers.mutations))
+
+module.exports = {
     DateTime: DateTimeResolver,
+    ...allResolvers,
 
     Query,
     Mutation

@@ -1,5 +1,5 @@
 const queries = `
-  users: [User]
+  region(zipcode: Int): Region
 `;
 
 module.exports = queries

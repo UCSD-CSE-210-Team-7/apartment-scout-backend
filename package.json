@@ -13,7 +13,6 @@
     "url": "git+https://github.com/UCSD-CSE-210-Team-7/apartment-scout-backend.git"
   },
   "author": "",
-  "type": "module",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/UCSD-CSE-210-Team-7/apartment-scout-backend/issues"
