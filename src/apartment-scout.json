@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "apartment-scout",
+  "private_key_id": "3b24e3b0c6f6498a020681d4c7a443780e4bb7cb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCija0eCMO5MCsP\n3n+NBjGbdDvF6EDbGAvscCb2wT9IlwKab8PIkhoYDqvrXBQEr/yLmPrUMf2RlrYb\nddKeTCVp3NU7TmsRyorvqSf4Mc9RGgSPPXSYqLimrbqN6tRw9th7CYmRYyagwUFc\nGTk0WTsolZdWzujPUpirGP0WxEe0CB/vlcfPi+QrDxvthP64pt6O9bwUx2gI8oOI\nD6jqx/gRZhDndIGCn627jtgVtx6N+mXohhSxrGAyn41uyxB7FITXSRElYoUZY/zT\nwQSdNVzPerZjBfxvyGsfmmj7Fuc6/GoPn9xrBUTkMbZTihkBEpRCS0G8EE+Rgtti\nJOw9840xAgMBAAECggEABi5pRHy8lZqSbqFtPAN96C2KttdCvRocXPa0UpqNYaEl\nbxI8MZC1t4+6Q6JOHBIFoljUQ/StMee3X9KyikS2wQBt5toP6f6n2x51d8OMIMdC\noGBLwmDbGbJ+RzaEctG+MGqPzcSlk8QZjEskwNv6SwwqM7m9QmH/jnUOLbsTx3Ge\nmrttZo/+e28+in7/RMLGcn1gOYIoSg2EsSzj0W+07qJ7BgKCOVTIiwA5HMBFjA4a\nZwfUZlTJ2xQoQI5hJ7boMnhJzpEGV568WFGFFkpkxgXhlEOfe+XRZU0bGIu5o2o8\nxpu8571DlywzeC6thQCIFz0U163ohWcP6dLusjetAQKBgQDZNXzLZyGwLpSjL/Ep\nzBiCXRvjkvEl9ZPqUpsNhQePMytUkgT2FNPcWvfTk7IrFgf7qiCkftvq5wO3JAdL\nJ9saNvahLCWmU0tWkIyPZuehzyL6v/ROdIQ1xaWhg1GYwME/IYaFGjHY86dxrWgf\nnXjeYFYNlZw+g47pXajJO2yJsQKBgQC/lWjAAehUiAFPyxgz0GsNn1wQekyDg8GM\nJ+aAoVDdhukXu6e8ccnuMBBwJupagVfy5BDGiLKSdPDYahuKCz9H5ITlyWlb4FJB\nW1IAJwM8iBAs7RliUs6pmLhZib10eIX03/KJLXIlpQi0zzT+7jUy4eA9YaKKkfuQ\n2ktQuCSbgQKBgDEMWfzYcgwFyLy847lrhBFUEyslkFzhAqDEPI0mABn/FQbI3mPv\nOhQlWpclX/NIy06yESL0HpcByZ3+fcMj4d8ekDy+6lWPs5B9na/4LdAlJSH4XKOm\nvgAifI9nRvK2fCzUVjsSOjVid+o8nSmedp/Io0X4Bcs8C/Z4lteyGoVRAoGAM6eP\nFKXvBEufPupdXisFkiizY+X1l0gA+U8QwQG9kdz8H+ACu7ZaYZQn+nUjnr9c/Sos\ns7rLmt1YyqDhR/j8WN/uTR5e/9ydkO2UUGI0Zy+wXMyYmYAGJIf+vHV81VhhlcKD\n3CSasDes/0MW4N1NDqkEEsiuUHpHv6h7wgnEJQECgYAkYyAfsnXUThkSxi1C3U3w\nRMBHjW/kEPMoUCTG3uvdfTtyl3tShMPKB86Ct70kcF1l1kAZMTMFawQCa5fsxJwp\nnC6E7r39MJZJ9bw/lun7uTBBBFU3Svj+O6djGe6jt/MMo1DOcEIE4EJh8dw/GS95\nBb0olnMkHbv/hSKoae5HZw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-qs6pl@apartment-scout.iam.gserviceaccount.com",
+  "client_id": "116329005152191959535",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-qs6pl%40apartment-scout.iam.gserviceaccount.com"
+}
