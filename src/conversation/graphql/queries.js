@@ -1,5 +1,5 @@
 const queries = `
-  conversations: [Conversation]
+  conversations(user: String!): [Conversation]
 `;
 
 module.exports = queries

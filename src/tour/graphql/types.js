@@ -1,4 +1,9 @@
 const types = `
+    enum UserType {
+        scout
+        requester
+    }
+
     type Tour {
         tour_id: Int
         tour_address: String

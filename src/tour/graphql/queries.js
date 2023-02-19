@@ -1,5 +1,5 @@
 const queries = `
-  tours(user: String!): [Tour]
+    tours(type: UserType!, user: String!): [Tour]
 `;
 
 module.exports = queries

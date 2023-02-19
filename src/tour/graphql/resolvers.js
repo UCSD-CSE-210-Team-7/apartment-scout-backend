@@ -1,104 +1,24 @@
-const users = [{
-            email: "some.user@email.com",
-            name: "some user",
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: true,
-            is_requester: false,
-            regions: [1,2,3,4,5],
-            conversations: [{
-                conversation_id: 0,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 1,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 2,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }],
-            tours: [
-                {
-                    tour_id: 0,
-                    tour_address: "7699 Palmilla Drive La Jolla CA 92122",
-                    requested_by: undefined,
-                    scouted_by: undefined,
-                    date_requested: Date.now(),
-                    date_completed: Date.now(),
-                    status: "COMPLETE",
-                    tour_summary: "House sucks",
-                    tour_review_text: "Thanks",
-                    tour_review_stars: 5,
-                },
-            ]
-        }, {
-            email: "some.user2@email.com",
-            name: "some user2",
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: true,
-            is_requester: false,
-            regions: [1,2,3,4,5],
-            conversations: [{
-                conversation_id: 0,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 1,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 2,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }],
-            tours: [
-                {
-                    tour_id: 1,
-                    tour_address: "9500 Gilman Drive San Diego CA 92092",
-                    requested_by: undefined,
-                    scouted_by: undefined,
-                    date_requested: Date.now(),
-                    date_completed: Date.now(),
-                    status: "COMPLETE",
-                    tour_summary: "House sucks",
-                    tour_review_text: "Thanks",
-                    tour_review_stars: 5,
-                },
-            ]
-        }];
-
+const users_dal = require('../../user/data_access')
+const tours_dal = require('../../tour/data_access')
 
 const Tour = {
+    requested_by: tour => users_dal.getUserDetails(tour.requested_by),
+    scouted_by: tour => users_dal.getUserDetails(tour.scouted_by),
 }
 
 const queries = {
-    tours: (root, args, context, info) => {
-        return users.find(i => i.email === args.user).tours
-    },
+    tours: (root, args, context, info) => tours_dal.getToursByUser(args),
 };
 
 const mutations = {
     createTour: (root, args) => {
+        const requested_by = data.find(i => i.email === args.requester)
+        const scouted_by = data.find(i => i.email === args.scout)
         const tour = {
             tour_id: 1,
             tour_address: args.address,
-            requested_by: users.find(i => i.email === args.requester),
-            scouted_by: users.find(i => i.email === args.scout),
+            requested_by,
+            scouted_by,
             date_requested: Date.now(),
             date_completed: Date.now(),
             status: "PLANNED",

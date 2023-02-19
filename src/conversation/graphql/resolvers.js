@@ -1,18 +1,13 @@
-const conversations = [{
-    conversation_id: 0,
-    person_a: "test@gmail.com",
-    person_b: "test2@gmail.com",
-    last_msg: "Hi there",
-    last_msg_time: Date.now()
-}];
+const conversations_dal = require('../../conversation/data_access')
+const messages_dal = require('../../message/data_access')
 
 const Conversation = {
+    last_msg: conversation => messages_dal.getLastMessage(conversation.conversation_id),
+    messages: conversation => messages_dal.getAllMessages(conversation.conversation_id),
 }
 
 const queries = {
-    conversations: (root, args) => {
-        return conversations
-    },
+    conversations: (root, args) => conversations_dal.getConversations(args.user),
 };
 
 const mutations = {
@@ -25,7 +20,8 @@ const mutations = {
             last_msg_time: 0,
         };
 
-        conversations.push(conversation)
+        data.find(i => i.email === args.person_a).conversations.push(conversation)
+        data.find(i => i.email === args.person_b).conversations.push(conversation)
 
         return conversation;
     },

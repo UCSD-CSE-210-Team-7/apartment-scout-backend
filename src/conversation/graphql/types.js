@@ -3,8 +3,8 @@ const types = `
     conversation_id: Int
     person_a: String
     person_b: String
-    last_msg: String
-    last_msg_time: DateTime
+    last_msg: Message
+    messages: [Message]
   }
 `;
 

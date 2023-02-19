@@ -5,9 +5,10 @@ const express = require('express');
 const http = require('http')
 const cookieParser = require('cookie-parser')
 
-const authMiddleware = require('./auth.js')
-const typeDefs = require('./typeDefs.js');
-const resolvers = require('./resolvers.js')
+const { client } = require('./src/utils/db.js')
+const authMiddleware = require('./src/auth.js')
+const typeDefs = require('./src/typeDefs.js');
+const resolvers = require('./src/resolvers.js')
 
 async function startServer() {
     const app = express();
@@ -19,7 +20,9 @@ async function startServer() {
         plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     });
 
-    await server.start();
+    await server.start().then(() => console.log('server running'));
+
+    await client.connect().then(() => console.log('db connected'));
 
     app.use(
         '/graphql',
@@ -28,7 +31,7 @@ async function startServer() {
         cookieParser(),
         authMiddleware,
         expressMiddleware(server, {
-            context: async ({ req }) => ({ identity: req.identity }),
+            context: async ({ req }) => ({ identity: req.identity, db: client }),
         }),
     );
 

@@ -6,8 +6,9 @@ const types = `
     last_login: DateTime
     is_scout: Boolean
     is_requester: Boolean
+    tours: [Tour]
     regions: [Int]
-    conversations: [Conversation] @toOne(param: true, param2: "Hi")
+    conversations: [Conversation]
   }
 `;
 

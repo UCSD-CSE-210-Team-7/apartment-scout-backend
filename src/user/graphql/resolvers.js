@@ -1,72 +1,19 @@
-const users = [{
-            email: "some.user@email.com",
-            name: "some user",
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: true,
-            is_requester: false,
-            regions: [1,2,3,4,5],
-            conversations: [{
-                conversation_id: 0,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 1,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 2,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }]
-        }, {
-            email: "some.user2@email.com",
-            name: "some user2",
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: true,
-            is_requester: false,
-            regions: [1,2,3,4,5],
-            conversations: [{
-                conversation_id: 0,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 1,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }, {
-                conversation_id: 2,
-                person_a: "test@gmail.com",
-                person_b: "test2@gmail.com",
-                last_msg: "Hi there",
-                last_msg_time: Date.now()
-            }]
-        }];
+const data = require('../../../dummy_data.js')
 
+const user_dal = require('../../user/data_access')
+const conversations_dal = require('../../conversation/data_access')
+const regions_dal = require('../../region/data_access')
+const tours_dal = require('../../tour/data_access')
 
 const User = {
-    conversations: (root, args, context, info) => {
-        console.log('user.conversations resolver')
-        // debugger;
-        // console.log(root, args, context, info.fieldNodes.find(field => field.name.value === info.fieldName).selectionSet.selections); 
-        return root.conversations
-    }
+    tours: user => tours_dal.getToursByUser({type: user.is_requester ? 'requester' : 'scout', user: user.email}),
+    regions: user => regions_dal.getRegions(user.email).then(i => i.map(s => s.zipcode)),
+    conversations: user => conversations_dal.getConversations(user.email)
 }
 
 const queries = {
     users: (root, args, context, info) => {
-        console.log(info.schema)
+        /*
         const directives = info.schema.getType('User').astNode.fields.reduce(
             (acc, val) => { 
                 acc[val.name.value] = val.directives.map(
@@ -92,9 +39,8 @@ const queries = {
                     selectionSet: x && x.selectionSet && x.selectionSet.selections,
                 })
             ).map(x => ({...x, directives: directives[x.name]}))
-        // console.log(query);
-        console.log('users resolver')
-        return users
+        */
+        return user_dal.getAllUsers()
     },
 };
 
