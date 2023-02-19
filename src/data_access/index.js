@@ -9,6 +9,4 @@ const imports = fs
         }) 
     )
 
-console.log(imports)
-
 module.exports = Object.assign({}, ...imports)

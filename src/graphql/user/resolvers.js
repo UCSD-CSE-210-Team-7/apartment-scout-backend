@@ -3,7 +3,7 @@ const dal = require('../../data_access')
 const User = {
     tours: user => dal.tour.getToursByUser({type: user.is_requester ? 'requester' : 'scout', user: user.email}),
     regions: user => dal.region.getRegions(user.email).then(i => i.map(s => s.zipcode)),
-    conversations: user => dal.conversations.getConversations(user.email)
+    conversations: user => dal.conversation.getConversations(user.email)
 }
 
 const queries = {
@@ -41,18 +41,11 @@ const queries = {
 
 const mutations = {
     createUser: (root, args) => {
-        const user = {
-            email: args.email,
-            name: args.name,
-            created_on: Date.now(),
-            last_login: Date.now(),
-            is_scout: args.is_scout,
-            is_requester: args.is_requester,
-        };
+        return dal.user.createUser(args)
+    },
 
-        users.push(user)
-
-        return user;
+    updateUser: (root, args) => {            
+        return dal.user.updateUser(args)
     },
 };
 

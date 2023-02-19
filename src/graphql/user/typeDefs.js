@@ -22,7 +22,16 @@ const mutations = `
     name: String!
     is_scout: Boolean!
     is_requester: Boolean!
+    regions: [Int]
   ): User
+
+  updateUser(
+    email: String!
+    name: String
+    is_scout: Boolean
+    is_requester: Boolean
+    regions: [Int]
+  ): Int
 `;
 
 
