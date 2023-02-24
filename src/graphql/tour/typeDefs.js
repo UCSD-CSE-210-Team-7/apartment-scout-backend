@@ -23,11 +23,24 @@ const queries = `
 `;
 
 const mutations = `
-  createTour(
-    requester: String!
-    scout: String!
-    address: String!
-  ): Tour
+    createTour(
+        requested_by: String!
+        scouted_by: String!
+        tour_address: String!
+    ): Tour
+
+    updateTour(
+        tour_id: Int!
+        tour_address: String
+        requested_by: String
+        scouted_by: String
+        date_requested: DateTime
+        date_completed: DateTime
+        status: String
+        tour_summary: String
+        tour_review_text: String
+        tour_review_stars: Int
+    ): Tour
 `;
 
 module.exports = { types, queries, mutations }

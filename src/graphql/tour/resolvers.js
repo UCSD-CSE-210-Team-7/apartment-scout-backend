@@ -11,24 +11,17 @@ const queries = {
 
 const mutations = {
     createTour: (root, args) => {
-        const requested_by = data.find(i => i.email === args.requester)
-        const scouted_by = data.find(i => i.email === args.scout)
         const tour = {
-            tour_id: 1,
-            tour_address: args.address,
-            requested_by,
-            scouted_by,
-            date_requested: Date.now(),
-            date_completed: Date.now(),
-            status: "PLANNED",
-            tour_summary: "",
-            tour_review_text: "",
-            tour_review_stars: -1,
+            tour_address: args.tour_address,
+            requested_by: args.requested_by,
+            scouted_by: args.scouted_by,
         }
-        
-        tour.requested_by.tours.push(tour)
-        tour.scouted_by.tours.push(tour)
-        return tour
+
+        return dal.tour.createTour(tour)
+    },
+
+    updateTour: (root, args) => {
+        return dal.tour.updateTour(args)
     },
 };
 

@@ -17,7 +17,7 @@ const mutations = `
     sender: String!
     msg_text: String!
     conversation: Int!
-  ): User
+  ): Message
 `;
 
 module.exports = { types, queries, mutations }

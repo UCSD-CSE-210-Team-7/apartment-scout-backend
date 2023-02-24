@@ -14,7 +14,15 @@ async function getAllMessages(conversation){
     return res.rows
 }
 
+async function createMessage({msg_text, sender, conversation}){
+    const userInsert = `INSERT INTO Messages (msg_text, sender, conversation_id) VALUES ($1, $2, $3) RETURNING *`
+    const userArgs =  [msg_text, sender, conversation]
+    const res = await client.query(userInsert, userArgs)
+    return res.rows[0]
+}
+
 module.exports = {
     getAllMessages,
-    getLastMessage
+    getLastMessage,
+    createMessage,
 }

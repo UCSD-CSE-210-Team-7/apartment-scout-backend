@@ -31,7 +31,7 @@ const mutations = `
     is_scout: Boolean
     is_requester: Boolean
     regions: [Int]
-  ): Int
+  ): User
 `;
 
 

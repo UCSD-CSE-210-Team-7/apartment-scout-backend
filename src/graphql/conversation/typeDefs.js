@@ -1,8 +1,8 @@
 const types = `
   type Conversation {
     conversation_id: Int
-    person_a: String
-    person_b: String
+    person_a: User
+    person_b: User
     last_msg: Message
     messages: [Message]
   }
@@ -14,8 +14,8 @@ const queries = `
 
 const mutations = `
   createConversation(
-    person_a: String
-    person_b: String
+    person_a: String!
+    person_b: String!
   ): Conversation
 `;
 
