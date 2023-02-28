@@ -34,5 +34,7 @@ const mutations = `
   ): User
 `;
 
+const subscriptions = `
+`;
 
-module.exports = { types, queries, mutations }
+module.exports = { queries, mutations, types, subscriptions }

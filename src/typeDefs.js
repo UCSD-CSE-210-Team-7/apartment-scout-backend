@@ -18,6 +18,12 @@ const mutation = `
     }
 `
 
+const subscription = `
+    type Subscription {
+        ${imports.map(i => i.subscriptions).join("")}
+    }
+`
+
 module.exports = [
     DateTimeTypeDefinition,
     `directive @toOne (
@@ -26,5 +32,6 @@ module.exports = [
     ) on FIELD_DEFINITION `,
     definedTypes,
     query,
-    mutation
+    mutation,
+    subscription,
 ]

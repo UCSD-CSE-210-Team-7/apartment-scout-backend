@@ -20,4 +20,11 @@ const mutations = `
   ): Message
 `;
 
-module.exports = { types, queries, mutations }
+const subscriptions = `
+  message( 
+    recipient: String!
+  ): Message
+
+`;
+
+module.exports = { queries, mutations, types, subscriptions }

@@ -10,9 +10,7 @@ const queries = `
 
 const mutations = `
 `;
+const subscriptions = `
+`;
 
-module.exports = {
-    types,
-    queries,
-    mutations
-}
+module.exports = { queries, mutations, types, subscriptions }

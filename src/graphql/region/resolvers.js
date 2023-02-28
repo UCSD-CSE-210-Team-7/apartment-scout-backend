@@ -11,8 +11,12 @@ const queries = {
 const mutations = {
 };
 
+const subscriptions = {
+};
+
 module.exports = { 
     Region, 
     queries, 
-    mutations 
+    mutations,
+    subscriptions,
 };

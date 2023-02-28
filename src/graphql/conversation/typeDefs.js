@@ -19,4 +19,7 @@ const mutations = `
   ): Conversation
 `;
 
-module.exports = { queries, mutations, types }
+const subscriptions = `
+`
+
+module.exports = { queries, mutations, types, subscriptions }

@@ -25,8 +25,12 @@ const mutations = {
     },
 };
 
+const subscriptions = {
+};
+
 module.exports = { 
     Tour, 
     queries, 
-    mutations 
+    mutations,
+    subscriptions,
 };

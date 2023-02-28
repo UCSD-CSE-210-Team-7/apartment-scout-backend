@@ -43,4 +43,7 @@ const mutations = `
     ): Tour
 `;
 
-module.exports = { types, queries, mutations }
+const subscriptions = `
+`;
+
+module.exports = { queries, mutations, types, subscriptions }

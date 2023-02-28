@@ -5,12 +5,14 @@ const imports = fs
     .readdirSync(`${__dirname}/graphql`)
     .map(i => require(`./graphql/${i}`))
 
+const protectedFields = ['queries', 'mutations', 'subscriptions']
+
 const filterResolver = i => (
     Object.fromEntries(
         Object.entries(
             i.resolvers
         ).filter(
-            ([key]) => key != 'queries' && key != 'mutations'
+            ([key]) => !protectedFields.includes(key)
         )
     )
 )
@@ -18,11 +20,13 @@ const filterResolver = i => (
 const allResolvers = Object.assign({}, ...imports.map(filterResolver))
 const Query = Object.assign({}, ...imports.map(i => i.resolvers.queries))
 const Mutation = Object.assign({}, ...imports.map(i => i.resolvers.mutations))
+const Subscription = Object.assign({}, ...imports.map(i => i.resolvers.subscriptions))
 
 module.exports = {
     DateTime: DateTimeResolver,
     ...allResolvers,
 
     Query,
-    Mutation
+    Mutation,
+    Subscription
 };

@@ -49,8 +49,12 @@ const mutations = {
     },
 };
 
+const subscriptions = {
+};
+
 module.exports = { 
     User, 
     queries, 
-    mutations 
+    mutations,
+    subscriptions,
 };

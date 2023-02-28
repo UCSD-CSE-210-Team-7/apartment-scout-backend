@@ -22,4 +22,12 @@ const mutations = {
     },
 };
 
-module.exports = { Conversation, queries, mutations };
+const subscriptions = {
+};
+
+module.exports = { 
+    Conversation, 
+    queries, 
+    mutations,
+    subscriptions,
+};
