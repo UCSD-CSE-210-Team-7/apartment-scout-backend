@@ -8,6 +8,7 @@ const { WebSocketServer } = require('ws')
 const { useServer } = require('graphql-ws/lib/use/ws')
 
 const express = require('express')
+const cors = require('cors')
 const http = require('http')
 const cookieParser = require('cookie-parser')
 
@@ -36,7 +37,7 @@ async function startServer() {
 
     const wsServer = new WebSocketServer({
         server: httpServer,
-        path: '/graphql',
+        path: '/',
     });
     const serverCleanup = useServer(
         {
@@ -75,8 +76,11 @@ async function startServer() {
     await client.connect().then(() => console.log('db connected'));
 
     app.use(
-        '/graphql',
-        // express.cors(),
+        '/',
+        cors({
+            origin: 'http://localhost:3000',
+            credentials: true,
+        }),
         express.json(),
         cookieParser(),
         authMiddlewareRouter,

@@ -5,7 +5,7 @@ const types = `
 `;
 
 const queries = `
-  region(zipcode: Int): Region
+  usersByRegion(zipcode: Int): Region
 `;
 
 const mutations = `

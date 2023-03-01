@@ -14,6 +14,9 @@ const types = `
 
 const queries = `
   users: [User]
+  userDetails(
+    email: String!
+  ): User
 `;
 
 const mutations = `

@@ -5,7 +5,7 @@ const Region = {
 }
 
 const queries = {
-    region: (root, args, context, info) => dal.region.getUsers(args.zipcode).then(i => i.map(a => a.email)),
+    usersByRegion: (root, args, context, info) => dal.region.getUsers(args.zipcode).then(i => i.map(a => a.email)),
 };
 
 const mutations = {
