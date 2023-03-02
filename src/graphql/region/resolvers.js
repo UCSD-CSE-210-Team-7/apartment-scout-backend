@@ -1,7 +1,10 @@
 const dal = require('../../data_access')
 
 const Region = {
-    users: emails => dal.user.getUserDetails(...emails)
+    users: emails => {
+        const res = dal.user.getUserDetails(...emails)
+        return emails.length == 1 ? [res] : res
+    }
 }
 
 const queries = {
