@@ -21,10 +21,7 @@ const mutations = `
 `;
 
 const subscriptions = `
-  message( 
-    recipient: String!
-  ): Message
-
+  message: Message
 `;
 
 module.exports = { queries, mutations, types, subscriptions }
