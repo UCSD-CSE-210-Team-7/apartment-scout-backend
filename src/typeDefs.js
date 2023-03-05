@@ -2,8 +2,12 @@ const { DateTimeTypeDefinition } = require('graphql-scalars');
 const fs = require('fs')
 
 const imports = fs
-    .readdirSync(`${__dirname}/graphql`)
-    .map(i => require(`./graphql/${i}`))
+  .readdirSync(`${__dirname}/graphql`)
+  .filter((name) => {
+    if (name == "__tests__") return false;
+    return true;
+  })
+  .map((i) => require(`./graphql/${i}`));
 
 const definedTypes = imports.map(i => i.types)
 
