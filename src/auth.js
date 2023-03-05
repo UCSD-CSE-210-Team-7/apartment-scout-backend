@@ -24,9 +24,10 @@ async function verifyIdentity({ sessionCookie, authorization }){
 
 // PREPROCESSOR FOR ALL API ROUTES
 authMiddlewareRouter.post('/', async (req, res, next) => {
-    if(req.headers.admin)
+    if(req.headers.admin){
+        console.log(`admin user...`)
         return next()
-
+    }
 
     try {
         const { identity, sessionCookie } = await verifyIdentity({ 
@@ -41,6 +42,7 @@ authMiddlewareRouter.post('/', async (req, res, next) => {
             res.cookie('sessionCookie', sessionCookie, options)
         }
 
+        console.log(`identity verified, continuing...`)
         next()
     }
     catch(error){
