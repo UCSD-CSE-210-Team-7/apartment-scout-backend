@@ -2,11 +2,14 @@ const { DateTimeResolver } = require('graphql-scalars');
 const fs = require('fs')
 
 const imports = fs
-    .readdirSync(`${__dirname}/graphql`)
-    .map(i => require(`./graphql/${i}`))
+  .readdirSync(`${__dirname}/graphql`)
+  .filter((name) => {
+    if (name == "__tests__") return false;
+    return true;
+  })
+  .map((i) => require(`./graphql/${i}`));
 
 const protectedFields = ['queries', 'mutations', 'subscriptions']
-
 const filterResolver = i => (
     Object.fromEntries(
         Object.entries(
