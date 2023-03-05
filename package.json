@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
@@ -32,6 +32,7 @@
     "ws": "^8.12.1"
   },
   "devDependencies": {
+    "jest": "^29.4.3",
     "nodemon": "^2.0.20"
   }
 }
