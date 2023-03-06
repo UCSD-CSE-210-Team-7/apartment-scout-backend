@@ -7,6 +7,9 @@ const User = {
 }
 
 const queries = {
+    me: (root, args, context, info) => {
+        return dal.user.getUserDetails(context.identity)
+    },
     userDetails: (root, args, context, info) => {
         return dal.user.getUserDetails(args.email)
     },

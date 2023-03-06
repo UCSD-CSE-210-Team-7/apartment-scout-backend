@@ -5,7 +5,7 @@ const types = `
     created_on: DateTime
     last_login: DateTime
     is_scout: Boolean
-    is_requester: Boolean
+    calendly_link: String
     tours: [Tour]
     regions: [Int]
     conversations: [Conversation]
@@ -17,6 +17,7 @@ const queries = `
   userDetails(
     email: String!
   ): User
+  me: User
 `;
 
 const mutations = `
@@ -26,6 +27,7 @@ const mutations = `
     is_scout: Boolean!
     is_requester: Boolean!
     regions: [Int]
+    calendly_link: String
   ): User
 
   updateUser(
@@ -34,6 +36,7 @@ const mutations = `
     is_scout: Boolean
     is_requester: Boolean
     regions: [Int]
+    calendly_link: String
   ): User
 `;
 

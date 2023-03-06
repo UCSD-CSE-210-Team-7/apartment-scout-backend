@@ -25,16 +25,18 @@ describe("Tour queries and mutations test", () => {
     dal.tour.createTour.mockReturnValueOnce(true);
     const args = {
       tour_address: "Gilman Drive",
-      requested_by: "Shanay",
       scouted_by: "Ajinkya",
     };
+    const context = {
+      identity: 'Shanay'
+    }
     const expectedArgs = {
       tour_address: "Gilman Drive",
       requested_by: "Shanay",
       scouted_by: "Ajinkya",
     };
     // Act
-    const res = await resolvers.mutations.createTour(null, args);
+    const res = await resolvers.mutations.createTour(null, args, {identity: 'Shanay'});
     // Assert
     expect(res).toEqual(true);
     expect(dal.tour.createTour).toHaveBeenCalledWith(expectedArgs);

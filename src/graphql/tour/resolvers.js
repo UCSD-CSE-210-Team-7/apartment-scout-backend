@@ -10,10 +10,10 @@ const queries = {
 };
 
 const mutations = {
-    createTour: (root, args) => {
+    createTour: (root, args, context) => {
         const tour = {
             tour_address: args.tour_address,
-            requested_by: args.requested_by,
+            requested_by: context.identity,
             scouted_by: args.scouted_by,
         }
 

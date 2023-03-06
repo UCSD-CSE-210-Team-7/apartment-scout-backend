@@ -24,7 +24,6 @@ const queries = `
 
 const mutations = `
     createTour(
-        requested_by: String!
         scouted_by: String!
         tour_address: String!
     ): Tour

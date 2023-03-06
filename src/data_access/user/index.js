@@ -13,12 +13,12 @@ async function getUserDetails(...emails){
     return emails.length == 1 ? res.rows[0] : res.rows
 }
 
-async function createUser({email, name, is_scout, is_requester, regions = []}){
+async function createUser({email, name, is_scout, calendly_link, regions = []}){
     try {
         await client.query('BEGIN')
 
-        const userInsert = `INSERT INTO Users (email, name, is_scout, is_requester) VALUES ($1, $2, $3, $4) RETURNING *`
-        const userArgs =  [email, name, is_scout, is_requester]
+        const userInsert = `INSERT INTO Users (email, name, is_scout, calendly_link) VALUES ($1, $2, $3, $4) RETURNING *`
+        const userArgs =  [email, name, is_scout, calendly_link]
         const user = (await client.query(userInsert, userArgs)).rows[0]
 
         if(regions.length > 0) {

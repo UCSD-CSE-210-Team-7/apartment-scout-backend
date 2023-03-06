@@ -29,15 +29,17 @@ describe("Region queries, mutations and subscriptions test", () => {
       sender: "Ajinkya",
       conversation: 12,
     };
+    const context = {
+      identity: "Ajinkya",
+    }
     const args = {
       msg_text: "Hello there",
-      sender: "Ajinkya",
       conversation: 12,
     };
     dal.message.createMessage.mockReturnValueOnce(expectedMessage);
 
     // Act
-    const res = await resolvers.mutations.createMessage(null, args);
+    const res = await resolvers.mutations.createMessage(null, args, context);
     //Assert
     expect(res).toEqual(expectedMessage);
     expect(dal.message.createMessage).toHaveBeenCalledWith(expectedMessage);

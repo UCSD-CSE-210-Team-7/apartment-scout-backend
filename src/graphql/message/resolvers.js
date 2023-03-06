@@ -3,8 +3,6 @@ const { PubSub, withFilter } = require('graphql-subscriptions')
 
 const pubsub = new PubSub();
 
-pubsub.subscribe('MESSAGE', console.log)
-
 const Message = {
     sender: message => dal.user.getUserDetails(message.sender),
     conversation: message => dal.conversation.getConversationById(message.conversation_id),
@@ -17,10 +15,10 @@ const queries = {
 const delay = (t, val) => new Promise(resolve => setTimeout(resolve, t, val));
 
 const mutations = {
-    createMessage: async (root, args) => {
+    createMessage: async (root, args, context) => {
         const message = {
             msg_text: args.msg_text,
-            sender: args.sender,
+            sender: context.identity,
             conversation: args.conversation,
         }
 
@@ -36,7 +34,10 @@ const subscriptions = {
     message: {
         subscribe: withFilter(
             () => pubsub.asyncIterator(['MESSAGE']),
-            (payload, variables, context) => context.authorizedConversations.includes( payload.message.conversation_id ) && context.identity.email !== payload.message.sender.email,
+            (payload, variables, context) => {
+                console.log(context, payload, context.authorizedConversations.includes( payload.message.conversation_id ) && context.identity !== payload.message.sender)
+                return context.authorizedConversations.includes( payload.message.conversation_id ) && context.identity !== payload.message.sender
+            }
         )
     }
 };

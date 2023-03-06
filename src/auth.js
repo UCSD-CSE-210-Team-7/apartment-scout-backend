@@ -35,7 +35,7 @@ authMiddlewareRouter.post('/', async (req, res, next) => {
             authorization: req.headers.authorization || req.headers.Authorization,
         })
 
-        req.identity = identity.email
+        req.identity = identity
         if(sessionCookie){
             const expiresIn = 60 * 60 * 24 * 1000 * 14;
             const options = {maxAge: EXPIRES_IN, httpOnly: false, secure: false};
