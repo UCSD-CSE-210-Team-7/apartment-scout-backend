@@ -22,12 +22,7 @@ const queries = `
 
 const mutations = `
   createUser(
-    email: String!
     name: String!
-    is_scout: Boolean!
-    is_requester: Boolean!
-    regions: [Int]
-    calendly_link: String
   ): User
 
   updateUser(

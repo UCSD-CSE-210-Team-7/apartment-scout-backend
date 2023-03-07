@@ -8,51 +8,51 @@ const authMiddlewareRouter = new express.Router();
 const EXPIRES_IN = 60 * 60 * 24 * 1000 * 14;
 
 async function verifyIdentity({ sessionCookie, authorization }){
-    if(sessionCookie){
-        const identity = await admin.auth().verifySessionCookie(sessionCookie)
-        // const user = await dal.user.getUserDetails(identity.email)
-        return { identity: identity.email }
-    }
-    else {
-        const identity = await admin.auth().verifyIdToken(authorization)
-        // const user = await dal.user.getUserDetails(identity.email)
+  if(sessionCookie){
+    const identity = await admin.auth().verifySessionCookie(sessionCookie)
+    // const user = await dal.user.getUserDetails(identity.email)
+    return { identity: identity.email }
+  }
+  else {
+    const identity = await admin.auth().verifyIdToken(authorization)
+    // const user = await dal.user.getUserDetails(identity.email)
 
-        const sessionCookie = await admin.auth().createSessionCookie(authorization, {expiresIn: EXPIRES_IN})
-        return { identity: identity.email, sessionCookie }
-    }
+    const sessionCookie = await admin.auth().createSessionCookie(authorization, {expiresIn: EXPIRES_IN})
+    return { identity: identity.email, sessionCookie }
+  }
 }
 
 // PREPROCESSOR FOR ALL API ROUTES
 authMiddlewareRouter.post('/', async (req, res, next) => {
-    if(req.headers.admin){
-        console.log(`admin user...`)
-        return next()
+  if(req.headers.admin){
+    console.log(`admin user...`)
+    return next()
+  }
+
+  try {
+    const { identity, sessionCookie } = await verifyIdentity({ 
+      sessionCookie: req.cookies.sessionCookie || undefined, 
+      authorization: req.headers.authorization || req.headers.Authorization,
+    })
+
+    req.identity = identity
+    if(sessionCookie){
+      const expiresIn = 60 * 60 * 24 * 1000 * 14;
+      const options = {maxAge: EXPIRES_IN, httpOnly: false, secure: false};
+      res.cookie('sessionCookie', sessionCookie, options)
     }
 
-    try {
-        const { identity, sessionCookie } = await verifyIdentity({ 
-            sessionCookie: req.cookies.sessionCookie || undefined, 
-            authorization: req.headers.authorization || req.headers.Authorization,
-        })
+    console.log(`identity verified, continuing...`)
+    next()
+  }
+  catch(error){
+    console.log(error)
+    console.log(`Failed to verify identity`)
+    res.clearCookie('sessionCookie')
+    return res.status(404).send('Error: verify identity')
+  }
 
-        req.identity = identity
-        if(sessionCookie){
-            const expiresIn = 60 * 60 * 24 * 1000 * 14;
-            const options = {maxAge: EXPIRES_IN, httpOnly: false, secure: false};
-            res.cookie('sessionCookie', sessionCookie, options)
-        }
-
-        console.log(`identity verified, continuing...`)
-        next()
-    }
-    catch(error){
-        console.log(error)
-        console.log(`Failed to verify identity`)
-        res.clearCookie('sessionCookie')
-        return res.status(404).send('Error: verify identity')
-    }
-
-    /*
+  /*
     if(req.cookies.sessionCookie){
         try{
             const sessionCookie = req.cookies.sessionCookie || '';
@@ -68,7 +68,7 @@ authMiddlewareRouter.post('/', async (req, res, next) => {
         }
     }
     else {
-        //verify identity
+      //verify identity
         try{
             const authorization = req.headers.authorization || req.headers.Authorization;
             const identity = await admin.auth().verifyIdToken(authorization)
@@ -89,14 +89,15 @@ authMiddlewareRouter.post('/', async (req, res, next) => {
             return res.status(404).send('Error: failed to parse identity')
         }
     }
-    */
-})
+   */
+    })
 
 authMiddlewareRouter.get('/test', (req, res) => {
-    res.status(200).send(req.identity)
+  res.status(200).send(req.identity)
 })
 
 module.exports = {
-    verifyIdentity,
-    authMiddlewareRouter
+  EXPIRES_IN,
+  verifyIdentity,
+  authMiddlewareRouter
 }
