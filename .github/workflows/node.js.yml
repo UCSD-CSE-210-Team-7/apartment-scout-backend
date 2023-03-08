@@ -18,24 +18,24 @@ jobs:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres
-        # Provide the password for postgres
-        env: 
-          POSTGRES_DB: apartment_scout_db 
-          POSTGRES_USER: admin 
-          POSTGRES_PASSWORD: admin
-        ports:
-          - 5432:5432
-              # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        #     services:
+        #       # Label used to access the service container
+        #       postgres:
+        #         # Docker Hub image
+        #         image: postgres
+        #         # Provide the password for postgres
+        #         env: 
+        #           POSTGRES_DB: apartment_scout_db 
+        #           POSTGRES_USER: admin 
+        #           POSTGRES_PASSWORD: admin
+        #         ports:
+        #           - 5432:5432
+        #               # Set health checks to wait until postgres has started
+        #         options: >-
+        #           --health-cmd pg_isready
+        #           --health-interval 10s
+        #           --health-timeout 5s
+        #           --health-retries 5
 
     steps:
     - uses: actions/checkout@v3
@@ -45,7 +45,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - uses: harmon758/postgresql-action@v1
+    - uses: m4nu56/postgresql-action@v1
       with:
         postgresql version: 'latest' # See https://hub.docker.com/_/postgres for available versions
         postgresql db: 'apartment_scout_db'
