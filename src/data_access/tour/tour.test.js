@@ -1,10 +1,6 @@
 const { Client } = require("pg");
 const { client } = require("../../utils/db.js");
-const {
-  getToursByUser,
-  createTour,
-  updateTour,
-} = require("./index");
+const { getToursByUser, createTour, updateTour } = require("./index");
 
 describe("Tour route", function () {
   let tour_id;
@@ -52,7 +48,7 @@ describe("Tour route", function () {
     const tour = await createTour({
       tour_address: "Lebon Dr",
       requested_by: "Ajinkya",
-      scouted_by: 'Scout123'
+      scouted_by: "Scout123",
     });
     expect(tour).not.toBe(null);
     expect(tour.tour_address).toBe("Lebon Dr");
@@ -64,7 +60,7 @@ describe("Tour route", function () {
   it("Get tours by requester", async function () {
     const tour = await getToursByUser({
       type: "requester",
-      user: "abokade@ucsd.edu"
+      user: "abokade@ucsd.edu",
     });
     expect(tour).toHaveLength(1);
     expect(tour[0]).not.toBe(null);
@@ -77,7 +73,7 @@ describe("Tour route", function () {
   it("Get tours by scout", async function () {
     const tour = await getToursByUser({
       type: "scout",
-      user: "test@ucsd.edu"
+      user: "test@ucsd.edu",
     });
     expect(tour).toHaveLength(1);
     expect(tour[0]).not.toBe(null);
@@ -93,7 +89,7 @@ describe("Tour route", function () {
       status: "COMPLETED",
       tour_summary: "tour summary",
       tour_review_text: "tour review text",
-      tour_review_stars: 6
+      tour_review_stars: 6,
     });
     expect(tour.status).toBe("COMPLETED");
     expect(tour.tour_summary).toBe("tour summary");

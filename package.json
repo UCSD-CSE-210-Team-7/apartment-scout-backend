@@ -29,11 +29,11 @@
     "graphql-tag": "^2.12.6",
     "graphql-ws": "^5.11.3",
     "pg": "^8.9.0",
-    "prettier": "^2.8.4",
     "ws": "^8.12.1"
   },
   "devDependencies": {
     "jest": "^29.4.3",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.4"
   }
 }

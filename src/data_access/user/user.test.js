@@ -111,5 +111,4 @@ describe("User route", function () {
     expect(rows.is_scout).toBe(false);
     expect(rows.calendly_link).toBe(null);
   });
-
 });
