@@ -1,0 +1,23 @@
+conversation_id, msg_text, sender
+1,Hi. This is Shubham.,skulkarn@ucsd.edu
+1,Hi Shubham. This is Manasi.,maagrawa@ucsd.edu
+1,Hi Manasi. How can I help you today?,skulkarn@ucsd.edu
+1,I need a tour for 625 8th Avenue New York NY. Please get this done ASAP.,maagrawa@ucsd.edu
+1,On my way now.,skulkarn@ucsd.edu
+1,Tour is complete. Please leave a review!,skulkarn@ucsd.edu
+1,Thanks for your work!,maagrawa@ucsd.edu
+1,Thanks Manasi!,skulkarn@ucsd.edu
+2,Hi. This is Ajinkya.,abokade@ucsd.edu
+2,Hi Ajinkya. This is Shanay.,shs004@ucsd.edu
+2,Hi Shanay. How can I help you today?,abokade@ucsd.edu
+2,I need a tour for 37 W Van Buren Street Chicago IL 60605. Please get this done ASAP.,shs004@ucsd.edu
+2,On my way now.,abokade@ucsd.edu
+2,Tour is complete. Please leave a review!,abokade@ucsd.edu
+2,Thanks Ajinkya!,shs004@ucsd.edu
+3,Hi. This is Guy.,gnir@ucsd.edu
+3,Hi Guy. This is Yang.,yaz083@ucsd.edu
+3,Hi Yang. How can I help you today?,gnir@ucsd.edu
+3,I need a tour for 9500 Gilman Drive La Jolla CA 92092. Please get this done ASAP.,yaz083@ucsd.edu
+3,On my way now.,gnir@ucsd.edu
+3,Tour is complete. Please leave a review!,gnir@ucsd.edu
+3,Thanks Guy!,yaz083@ucsd.edu

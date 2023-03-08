@@ -1,0 +1,4 @@
+tour_address, requested_by, scouted_by, date_requested, date_completed, status, tour_summary, tour_review_text, tour_review_stars
+625 8th Avenue New York NY ,maagrawa@ucsd.edu,skulkarn@ucsd.edu,2023-02-15 10:08:00AM,2023-02-15 11:08:00AM,COMPLETE,Very loud. Be cautious.,Thanks for the excellent tour. I'll rent ASAP.,5
+37 W Van Buren Street Chicago IL 60605,shs004@ucsd.edu,abokade@ucsd.edu,2023-02-15 10:09:00AM,2023-02-15 11:15:00AM,COMPLETE,Great apartment. Definitely live here.,Thanks for the excellent tour. I'll rent ASAP,5
+9500 Gilman Drive La Jolla CA 92092,yaz083@ucsd.edu,gnir@ucsd.edu,2023-02-15 10:10:00AM,2023-02-15 11:20:00AM,COMPLETE,Crappy house. Do not live here.,Thanks for the tour.,5

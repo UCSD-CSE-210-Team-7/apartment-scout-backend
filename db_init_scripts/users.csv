@@ -1,0 +1,7 @@
+email, name, created_on, last_login, is_scout, calendly_link
+skulkarn@ucsd.edu,Shubham Kulkarni,02-15-2023 10:00:00 AM,02-15-2023 10:00:00 AM,TRUE,https://calendly.com/shubhamkulkarni01/60min
+abokade@ucsd.edu,Ajinkya Bokade,02-15-2023 10:01:00 AM,02-15-2023 10:01:00 AM,TRUE,
+gnir@ucsd.edu,Guy Nir,02-15-2023 10:02:00 AM,02-15-2023 10:02:00 AM,TRUE,
+maagrawa@ucsd.edu,Manasi Agrawal,02-15-2023 10:03:00 AM,02-15-2023 10:03:00 AM,FALSE,
+shs004@ucsd.edu,Shanay Shah,02-15-2023 10:04:00 AM,02-15-2023 10:04:00 AM,FALSE,
+yaz083@ucsd.edu,Yang Zhang,02-15-2023 10:04:00 AM,02-15-2023 10:04:00 AM,FALSE,
