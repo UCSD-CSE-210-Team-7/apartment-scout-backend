@@ -45,11 +45,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - uses: m4nu56/postgresql-action@v1
+    - name: Setup PostgreSQL With Init Scripts
+      uses: m4nu56/postgresql-action@1.0
       with:
+        postgresql init scripts: './db_init_scripts/'
         postgresql version: 'latest' # See https://hub.docker.com/_/postgres for available versions
         postgresql db: 'apartment_scout_db'
         postgresql user: 'admin'
         postgresql password: 'admin'
-        postgresql init scripts: './db_init_scripts/'
     - run: npm test
