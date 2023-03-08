@@ -23,14 +23,12 @@ describe("Conversation queries and mutations test", () => {
     dal.conversation.getConversations.mockReturnValueOnce([mockConversation]);
 
     // Act
-    const args = { user: { email: "abokade@ucsd.edu", id: 1 } };
-    const res = await resolvers.queries.conversations(null, args);
+    const args = { };
+    const context = { identity: "abokade@ucsd.edu" }
+    const res = await resolvers.queries.conversations(null, args, context);
     //Assert
     expect(res).toEqual([expectedConversation]);
-    expect(dal.conversation.getConversations).toHaveBeenCalledWith({
-      email: "abokade@ucsd.edu",
-      id: 1,
-    });
+    expect(dal.conversation.getConversations).toHaveBeenCalledWith("abokade@ucsd.edu" );
   });
 
   it("Create Conversation mutation", async () => {

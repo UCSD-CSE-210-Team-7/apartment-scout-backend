@@ -9,7 +9,7 @@ const types = `
 `;
 
 const queries = `
-  conversations(user: String!): [Conversation]
+  conversations: [Conversation]
 `;
 
 const mutations = `

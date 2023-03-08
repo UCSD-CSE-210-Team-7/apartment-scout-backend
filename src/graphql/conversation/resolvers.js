@@ -8,7 +8,7 @@ const Conversation = {
 }
 
 const queries = {
-    conversations: (root, args) => dal.conversation.getConversations(args.user),
+    conversations: (root, args, context) => dal.conversation.getConversations(context.identity),
 };
 
 const mutations = {

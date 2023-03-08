@@ -14,7 +14,6 @@ const queries = `
 
 const mutations = `
   createMessage(
-    sender: String!
     msg_text: String!
     conversation: Int!
   ): Message
