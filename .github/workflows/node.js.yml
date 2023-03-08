@@ -31,14 +31,6 @@ jobs:
           POSTGRES_PASSWORD: admin
         ports:
           - 5432:5432
-
-      host: "localhost",
-      port: 5432,
-      database: "apartment_scout_db",
-      user: "admin",
-      password: "admin",
-      max: 1, // Reuse the connection to make sure we always hit the same temporal schema
-      idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
