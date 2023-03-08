@@ -67,19 +67,14 @@ describe("User queries and mutations test", () => {
 
   it("Create User mutation", async () => {
     // Arrange
-    const mockUser = {
-      id: 2,
-      name: "Ajinkya",
-      email: "ajinkya@example.com",
-    };
     dal.user.createUser.mockReturnValueOnce(true);
 
     // Act
-    const args = { user: mockUser };
-    const res = await resolvers.mutations.createUser(null, args);
+    const args = { name: "Ajinkya" };
+    const res = await resolvers.mutations.createUser(null, args, {identity: 'abokade@ucsd.edu'});
     // Assert
     expect(res).toEqual(true);
-    expect(dal.user.createUser).toHaveBeenCalledWith({ user: mockUser });
+    expect(dal.user.createUser).toHaveBeenCalledWith({ email: 'abokade@ucsd.edu', name: "Ajinkya" });
   });
 
   it("Update User mutation", async () => {
@@ -96,6 +91,6 @@ describe("User queries and mutations test", () => {
     const res = await resolvers.mutations.updateUser(null, args);
     // Assert
     expect(res).toEqual(true);
-    expect(dal.user.createUser).toHaveBeenCalledWith({ user: mockUser });
+    expect(dal.user.updateUser).toHaveBeenCalledWith({ user: mockUser });
   });
 });
