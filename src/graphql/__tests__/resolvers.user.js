@@ -6,6 +6,9 @@ describe("User queries and mutations test", () => {
   dal.user.getAllUsers = jest.fn();
   dal.user.createUser = jest.fn();
   dal.user.updateUser = jest.fn();
+  dal.tour.getToursByUser = jest.fn();
+  dal.region.getRegions = jest.fn();
+  dal.conversation.getConversations = jest.fn();
 
   it("Get All Users query: returns empty array if no response", async () => {
     // Arrange
@@ -71,10 +74,15 @@ describe("User queries and mutations test", () => {
 
     // Act
     const args = { name: "Ajinkya" };
-    const res = await resolvers.mutations.createUser(null, args, {identity: 'abokade@ucsd.edu'});
+    const res = await resolvers.mutations.createUser(null, args, {
+      identity: "abokade@ucsd.edu",
+    });
     // Assert
     expect(res).toEqual(true);
-    expect(dal.user.createUser).toHaveBeenCalledWith({ email: 'abokade@ucsd.edu', name: "Ajinkya" });
+    expect(dal.user.createUser).toHaveBeenCalledWith({
+      email: "abokade@ucsd.edu",
+      name: "Ajinkya",
+    });
   });
 
   it("Update User mutation", async () => {
@@ -92,5 +100,41 @@ describe("User queries and mutations test", () => {
     // Assert
     expect(res).toEqual(true);
     expect(dal.user.updateUser).toHaveBeenCalledWith({ user: mockUser });
+  });
+
+  it("Get tours for the user", async () => {
+    // Arrange
+    const user = { is_requester: "requester", email: "abokade@ucsd.edu" };
+    dal.tour.getToursByUser.mockReturnValueOnce(true);
+    // Act
+    const _ = await resolvers.User.tours(user);
+    // Assert
+    expect(dal.tour.getToursByUser).toHaveBeenCalledWith({
+      type: "requester",
+      user: "abokade@ucsd.edu",
+    });
+  });
+
+  it("Get regions for the user", async () => {
+    // Arrange
+    const mockPromise = Promise.resolve([{ zipcode: 92092 }]);
+    const user = { is_requester: "requester", email: "abokade@ucsd.edu" };
+    dal.region.getRegions.mockReturnValueOnce(mockPromise);
+    // Act
+    const regions = await resolvers.User.regions(user);
+    // Assert
+    expect(dal.region.getRegions).toHaveBeenCalledWith("abokade@ucsd.edu");
+    expect(regions).toHaveLength(1);
+    expect(regions[0]).toBe(92092);
+  });
+
+  it("Get conversations for the user", async () => {
+    // Arrange
+    const user = {email: "abokade@ucsd.edu" };
+    dal.conversation.getConversations.mockReturnValueOnce(true);
+    // Act
+    const _ = await resolvers.User.conversations(user);
+    // Assert
+    expect(dal.conversation.getConversations).toHaveBeenCalledWith("abokade@ucsd.edu");
   });
 });
