@@ -4,6 +4,9 @@ const dal = require("../../data_access");
 describe("Conversation queries and mutations test", () => {
   dal.conversation.createConversation = jest.fn();
   dal.conversation.getConversations = jest.fn();
+  dal.message.getLastMessage = jest.fn();
+  dal.message.getAllMessages = jest.fn();
+  dal.user.getUserDetails = jest.fn();
 
   it("Get Conversations of user query: returns all conversation of users", async () => {
     // Arrange
@@ -48,5 +51,57 @@ describe("Conversation queries and mutations test", () => {
     expect(dal.conversation.createConversation).toHaveBeenCalledWith(
       expectedArgs
     );
+  });
+
+  it("Get last message", async () => {
+    // Arrange
+    dal.message.getLastMessage.mockReturnValueOnce(true);
+    const conversation = {
+      conversation_id: 123,
+    };
+    // Act
+    const _ = await resolvers.Conversation.last_msg(conversation);
+    //Assert
+    expect(dal.message.getLastMessage).toHaveBeenCalledWith(123);
+  });
+
+  it("Get all messages", async () => {
+    // Arrange
+    dal.message.getAllMessages.mockReturnValueOnce(true);
+    const conversation = {
+      conversation_id: 1234,
+    };
+    // Act
+    const _ = await resolvers.Conversation.messages(conversation);
+    //Assert
+    expect(dal.message.getAllMessages).toHaveBeenCalledWith(1234);
+  });
+
+  it("Get sender user details", async () => {
+    // Arrange
+    dal.user.getUserDetails.mockReturnValueOnce(true);
+    const conversation = {
+      conversation_id: 1234,
+      person_a: "person_a",
+      person_b: "person_b",
+    };
+    // Act
+    const _ = await resolvers.Conversation.person_a(conversation);
+    //Assert
+    expect(dal.user.getUserDetails).toHaveBeenCalledWith("person_a");
+  });
+
+  it("Get receiver user details", async () => {
+    // Arrange
+    dal.user.getUserDetails.mockReturnValueOnce(true);
+    const conversation = {
+      conversation_id: 1234,
+      person_a: "person_a",
+      person_b: "person_b",
+    };
+    // Act
+    const _ = await resolvers.Conversation.person_b(conversation);
+    //Assert
+    expect(dal.user.getUserDetails).toHaveBeenCalledWith("person_b");
   });
 });
