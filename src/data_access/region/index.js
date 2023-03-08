@@ -4,7 +4,6 @@ async function getUsers(region){
     const query = 'SELECT email FROM UserRegion WHERE zipcode=$1'
     const args =  [region]
     const res = await client.query(query, args)
-    console.log(res.rows)
     return res.rows
 }
 
