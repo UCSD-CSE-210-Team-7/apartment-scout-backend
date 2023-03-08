@@ -3,9 +3,11 @@ const { client } = require("../../utils/db.js");
 const { getUsers, getRegions } = require("./index");
 
 describe("Region route", function () {
+  let mockClient; 
+
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
-    const mockClient = new Client({
+    mockClient = new Client({
       host: "localhost",
       port: 5432,
       database: "apartment_scout_db",
@@ -15,7 +17,7 @@ describe("Region route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect().then(() => console.log("db connected"));
+    await mockClient.connect()
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -41,6 +43,10 @@ describe("Region route", function () {
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
   });
 
+  afterAll(async () => {
+    return mockClient.end()
+  })
+
   it("Get users in the region", async function () {
     const users = await getUsers(12324);
     expect(users).not.toBe(null);
@@ -50,7 +56,7 @@ describe("Region route", function () {
 
   it("Get regions of the users", async function () {
     const regions = await getRegions("abokade@ucsd.edu");
-    console.log(regions);
+    // console.log(regions);
     expect(regions).not.toBe(null);
     expect(regions).toHaveLength(1);
     expect(regions[0].zipcode).toBe(12324);

@@ -4,9 +4,10 @@ const { getToursByUser, createTour, updateTour } = require("./index");
 
 describe("Tour route", function () {
   let tour_id;
+  let mockClient; 
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
-    const mockClient = new Client({
+    mockClient = new Client({
       host: "localhost",
       port: 5432,
       database: "apartment_scout_db",
@@ -16,7 +17,7 @@ describe("Tour route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect().then(() => console.log("db connected"));
+    await mockClient.connect()
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -43,6 +44,10 @@ describe("Tour route", function () {
     await client.query("DROP TABLE IF EXISTS pg_temp.users");
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
   });
+
+  afterAll(async () => {
+    return mockClient.end()
+  })
 
   it("Create tour with the details", async function () {
     const tour = await createTour({

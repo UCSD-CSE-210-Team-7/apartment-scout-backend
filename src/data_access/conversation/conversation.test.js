@@ -8,9 +8,11 @@ const {
 
 describe("Conversation route", function () {
   let conversation_id;
+  let mockClient; 
+
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
-    const mockClient = new Client({
+    mockClient = new Client({
       host: "localhost",
       port: 5432,
       database: "apartment_scout_db",
@@ -20,7 +22,7 @@ describe("Conversation route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect().then(() => console.log("db connected"));
+    await mockClient.connect()
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -46,6 +48,10 @@ describe("Conversation route", function () {
   afterEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.conversations");
   });
+
+  afterAll(async () => {
+    return mockClient.end()
+  })
 
   it("Insert conversation in the region", async function () {
     const conversation = await createConversation({
