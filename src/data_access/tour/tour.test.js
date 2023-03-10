@@ -1,6 +1,6 @@
 const { Client } = require("pg");
 const { client } = require("../../utils/db.js");
-const { getToursByUser, createTour, updateTour } = require("./index");
+const { getToursByUser, getTourById, createTour, updateTour } = require("./index");
 
 describe("Tour route", function () {
   let tour_id;
@@ -86,6 +86,17 @@ describe("Tour route", function () {
     expect(tour[0].requested_by).toBe("abokade@ucsd.edu");
     expect(tour[0].scouted_by).toBe("test@ucsd.edu");
     expect(tour[0].status).toBe("PLANNED");
+  });
+
+  it("Get tours by id", async function () {
+    const tour = await getTourById({
+      tour_id,
+    });
+    expect(tour).not.toBe(null);
+    expect(tour.tour_address).toBe("Gilman Dr");
+    expect(tour.requested_by).toBe("abokade@ucsd.edu");
+    expect(tour.scouted_by).toBe("test@ucsd.edu");
+    expect(tour.status).toBe("PLANNED");
   });
 
   it("Update tour", async function () {

@@ -87,7 +87,7 @@ async function startServer() {
       context: async ({ req, res }) => {
         if(req.headers.admin){
           console.log(`admin user`)
-          return {identity: 'admin', db: client}
+          return {identity: 'skulkarn@ucsd.edu', db: client}
         }
 
         const { identity, sessionCookie } = await verifyIdentity({ 

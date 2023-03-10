@@ -20,6 +20,8 @@ const types = `
 
 const queries = `
     tours(type: UserType!, user: String!): [Tour]
+
+    tour(tour_id: Int): Tour
 `;
 
 const mutations = `

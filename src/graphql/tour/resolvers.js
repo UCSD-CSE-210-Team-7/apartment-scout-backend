@@ -7,6 +7,7 @@ const Tour = {
 
 const queries = {
     tours: (root, args, context, info) => dal.tour.getToursByUser(args),
+    tour: (root, args, context, info) => dal.tour.getTourById(args)
 };
 
 const mutations = {

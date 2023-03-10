@@ -7,6 +7,13 @@ async function getToursByUser({type, user}){
     return res.rows
 }
 
+async function getTourById({tour_id}){
+    const query = `SELECT * FROM Tours WHERE tour_id=$1`
+    const args = [tour_id]
+    const res = await client.query(query, args)
+    return res.rows[0]
+}
+
 async function createTour({ tour_address, requested_by, scouted_by }){
     const tourInsert = `INSERT INTO Tours (tour_address, requested_by, scouted_by) VALUES ($1, $2, $3) RETURNING *`
     const tourArgs =  [tour_address, requested_by, scouted_by]
@@ -32,6 +39,7 @@ async function updateTour(updateObject){
 
 module.exports = {
     getToursByUser,
+    getTourById,
     createTour,
     updateTour,
 }
