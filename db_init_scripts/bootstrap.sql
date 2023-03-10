@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS Conversations (
     , person_a TEXT NOT NULL
     , person_b TEXT NOT NULL
     , FOREIGN KEY ( person_a ) REFERENCES Users(email)
-    , FOREIGN KEY ( person_b ) REFERENCES Users(email)
+    , FOREIGN KEY ( person_b ) REFERENCES Users(email),
+    CONSTRAINT unique_pair_constraint UNIQUE (person_a, person_b)
 );
 
 CREATE TABLE IF NOT EXISTS Messages (
