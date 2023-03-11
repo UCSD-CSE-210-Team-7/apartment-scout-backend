@@ -21,6 +21,13 @@ async function createTour({ tour_address, requested_by, scouted_by }){
     return res.rows[0]
 }
 
+async function createReview({ review_text, tour_id }) {
+    const reviewInsert = `UPDATE Tours SET tour_summary = $1 WHERE tour_id = $2 RETURNING *`;
+    const reviewArgs = [review_text, tour_id];
+    const res = await client.query(reviewInsert, reviewArgs);
+    return res.rows[0];
+}
+
 async function updateTour(updateObject){
     let updateQuery = `UPDATE Tours SET `
     let updateArgs = []
@@ -41,5 +48,6 @@ module.exports = {
     getToursByUser,
     getTourById,
     createTour,
+    createReview,
     updateTour,
 }

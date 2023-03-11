@@ -21,6 +21,15 @@ const mutations = {
         return dal.tour.createTour(tour)
     },
 
+    createReview: (root, args, context) => {
+        const review = {
+          review_text: args.review_text,
+          tour_id: args.tour_id,
+        }
+    
+        return dal.tour.createReview(review)
+    },
+
     updateTour: (root, args) => {
         return dal.tour.updateTour(args)
     },
