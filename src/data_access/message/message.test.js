@@ -3,9 +3,9 @@ const { client } = require("../../utils/db.js");
 const { getLastMessage, getAllMessages, createMessage } = require("./index");
 
 describe("Messages route", function () {
-  let conversation_id;
-  let mockClient; 
+  let mockClient;
 
+  // Set up a mock client and a temporary table before running the tests
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
     mockClient = new Client({
@@ -18,7 +18,7 @@ describe("Messages route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect()
+    await mockClient.connect();
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -28,6 +28,7 @@ describe("Messages route", function () {
     };
   });
 
+  // Set up a temporary table and insert fake data before each test
   beforeEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.messages");
     await client.query(
@@ -40,13 +41,15 @@ describe("Messages route", function () {
     const _ = await client.query(messageInsertQuery);
   });
 
+  // Drop the temporary table after each test
   afterEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.messages");
   });
 
+  // Close the mock client after all tests have run
   afterAll(async () => {
-    return mockClient.end()
-  })
+    return mockClient.end();
+  });
 
   it("Create message", async function () {
     const message = await createMessage({

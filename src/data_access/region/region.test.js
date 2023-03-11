@@ -3,8 +3,9 @@ const { client } = require("../../utils/db.js");
 const { getUsers, getRegions } = require("./index");
 
 describe("Region route", function () {
-  let mockClient; 
+  let mockClient;
 
+  // Set up a mock client and a temporary table before running the tests
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
     mockClient = new Client({
@@ -17,7 +18,7 @@ describe("Region route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect()
+    await mockClient.connect();
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -27,6 +28,7 @@ describe("Region route", function () {
     };
   });
 
+  // Set up a temporary table and insert fake data before each test
   beforeEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
     await client.query(
@@ -39,13 +41,15 @@ describe("Region route", function () {
     const _ = await client.query(userRegionInsertQuery);
   });
 
+  // Drop the temporary table after each test
   afterEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
   });
 
+  // Close the mock client after all tests have run
   afterAll(async () => {
-    return mockClient.end()
-  })
+    return mockClient.end();
+  });
 
   it("Get users in the region", async function () {
     const users = await getUsers(12324);
