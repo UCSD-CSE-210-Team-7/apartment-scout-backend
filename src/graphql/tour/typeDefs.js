@@ -30,10 +30,16 @@ const mutations = `
         tour_address: String!
     ): Tour
 
-    createReview(
+    createReviewForHouse(
        review_text: String!
        tour_id: Int!  
     ): Tour
+
+    createReviewForScout(
+        review_text: String!
+        rating: Int!
+        tour_id: Int!  
+     ): Tour
 
     updateTour(
         tour_id: Int!

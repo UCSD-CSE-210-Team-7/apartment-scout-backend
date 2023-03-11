@@ -21,9 +21,15 @@ async function createTour({ tour_address, requested_by, scouted_by }){
     return res.rows[0]
 }
 
-async function createReview({ review_text, tour_id }) {
+async function createReviewForHouse({ review_text, tour_id }) {
     const reviewInsert = `UPDATE Tours SET tour_summary = $1 WHERE tour_id = $2 RETURNING *`;
     const reviewArgs = [review_text, tour_id];
+    const res = await client.query(reviewInsert, reviewArgs);
+    return res.rows[0];
+}
+async function createReviewForScout({ review_text, rating, tour_id }) {
+    const reviewInsert = `UPDATE Tours SET tour_review_text = $1, tour_review_stars = $2 WHERE tour_id = $3 RETURNING *`;
+    const reviewArgs = [review_text, rating, tour_id];
     const res = await client.query(reviewInsert, reviewArgs);
     return res.rows[0];
 }
@@ -48,6 +54,7 @@ module.exports = {
     getToursByUser,
     getTourById,
     createTour,
-    createReview,
+    createReviewForHouse,
+    createReviewForScout,
     updateTour,
 }
