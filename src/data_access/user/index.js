@@ -33,23 +33,21 @@ async function updateUser(updateObject){
 
   const user = (await client.query(updateQuery, updateArgs)).rows[0]
 
-  if(updateObject.regions && updateObject.regions.length > 0) {
-    try {
-      await client.query('BEGIN')
+  try {
+    await client.query('BEGIN')
 
-      const deleteQuery = `DELETE FROM UserRegion WHERE email=$1`
-      const deleteArgs =  [ updateObject['email'] ]
-      await client.query(deleteQuery, deleteArgs)
+    const deleteQuery = `DELETE FROM UserRegion WHERE email=$1`
+    const deleteArgs =  [ updateObject['email'] ]
+    await client.query(deleteQuery, deleteArgs)
 
-      const regionInsert = `INSERT INTO UserRegion (email, zipcode) SELECT * FROM UNNEST ($1::text[], $2::int[]) RETURNING *`
-      const regionArgs =  [ updateObject['regions'].map(i => updateObject['email'] ), updateObject['regions'] ]
-      const regionResult = (await client.query(regionInsert, regionArgs)).rows
-      user.regions = regionResult
+    const regionInsert = `INSERT INTO UserRegion (email, zipcode) SELECT * FROM UNNEST ($1::text[], $2::int[]) RETURNING *`
+    const regionArgs =  [ updateObject['regions'].map(i => updateObject['email'] ), updateObject['regions'] ]
+    const regionResult = (await client.query(regionInsert, regionArgs)).rows
+    user.regions = regionResult
 
-      await client.query('COMMIT')
-    } catch (e) {
-      await client.query('ROLLBACK')
-    }
+    await client.query('COMMIT')
+  } catch (e) {
+    await client.query('ROLLBACK')
   }
 
   return user
