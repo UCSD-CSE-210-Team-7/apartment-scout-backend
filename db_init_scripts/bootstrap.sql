@@ -1,3 +1,6 @@
+-- SQL file that sets up tables for users, userregion, tours, conversation, messages
+-- Exports the data defined in the folder from csv into the table
+
 CREATE TABLE IF NOT EXISTS Users (
     email TEXT UNIQUE NOT NULL PRIMARY KEY
     , name TEXT NOT NULL

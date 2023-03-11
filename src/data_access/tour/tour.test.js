@@ -1,10 +1,17 @@
 const { Client } = require("pg");
 const { client } = require("../../utils/db.js");
-const { getToursByUser, getTourById, createTour, updateTour } = require("./index");
+const {
+  getToursByUser,
+  getTourById,
+  createTour,
+  updateTour,
+} = require("./index");
 
 describe("Tour route", function () {
   let tour_id;
-  let mockClient; 
+  let mockClient;
+
+  // Set up a mock client and a temporary table before running the tests
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
     mockClient = new Client({
@@ -17,7 +24,7 @@ describe("Tour route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect()
+    await mockClient.connect();
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -27,6 +34,7 @@ describe("Tour route", function () {
     };
   });
 
+  // Set up a temporary table and insert fake data before each test
   beforeEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.tours");
     await client.query(
@@ -40,14 +48,16 @@ describe("Tour route", function () {
     tour_id = tour.rows[0].tour_id;
   });
 
+  // Drop the temporary table after each test
   afterEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.users");
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
   });
 
+  // Close the mock client after all tests have run
   afterAll(async () => {
-    return mockClient.end()
-  })
+    return mockClient.end();
+  });
 
   it("Create tour with the details", async function () {
     const tour = await createTour({

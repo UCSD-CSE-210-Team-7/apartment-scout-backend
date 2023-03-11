@@ -8,8 +8,9 @@ const {
 } = require("./index");
 
 describe("User route", function () {
-  let mockClient; 
+  let mockClient;
 
+  // Set up a mock client and a temporary table before running the tests
   beforeAll(async () => {
     // Create a new pool with a connection limit of 1
     mockClient = new Client({
@@ -22,7 +23,7 @@ describe("User route", function () {
       idleTimeoutMillis: 0, // Disable auto-disconnection of idle clients to make sure we always hit the same temporal schema
     });
 
-    await mockClient.connect()
+    await mockClient.connect();
     // Mock the query function to always return a connection from the pool we just created
     client.query = (query) => {
       return mockClient.query(query);
@@ -32,6 +33,7 @@ describe("User route", function () {
     };
   });
 
+  // Set up a temporary table and insert fake data before each test
   beforeEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.users");
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
@@ -48,14 +50,16 @@ describe("User route", function () {
     const _ = await client.query(userInsertQuery);
   });
 
+  // Drop the temporary table after each test
   afterEach(async () => {
     await client.query("DROP TABLE IF EXISTS pg_temp.users");
     await client.query("DROP TABLE IF EXISTS pg_temp.userregion");
   });
 
+  // Close the mock client after all tests have run
   afterAll(async () => {
-    return mockClient.end()
-  })
+    return mockClient.end();
+  });
 
   it("Create user with the details", async function () {
     const user = await createUser({
