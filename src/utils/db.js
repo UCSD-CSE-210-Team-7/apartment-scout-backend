@@ -1,4 +1,4 @@
-const { Client, Pool } = require('pg')
+const { Client } = require('pg')
 
 const NEON_DB = {
     PGHOST:'ep-long-rain-948516.us-west-2.aws.neon.tech',
