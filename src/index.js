@@ -1,22 +1,23 @@
-const { parse } = require('graphql')
-const { ApolloServer} = require('@apollo/server')
-const { expressMiddleware } = require('@apollo/server/express4')
-const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
-const { makeExecutableSchema } = require('@graphql-tools/schema')
+const { ApolloServer } = require("@apollo/server");
+const { expressMiddleware } = require("@apollo/server/express4");
+const {
+  ApolloServerPluginDrainHttpServer,
+} = require("@apollo/server/plugin/drainHttpServer");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
 
-const { WebSocketServer } = require('ws')
-const { useServer } = require('graphql-ws/lib/use/ws')
+const { WebSocketServer } = require("ws");
+const { useServer } = require("graphql-ws/lib/use/ws");
 
-const express = require('express')
-const cors = require('cors')
-const http = require('http')
-const cookieParser = require('cookie-parser')
+const express = require("express");
+const cors = require("cors");
+const http = require("http");
+const cookieParser = require("cookie-parser");
 
-const { client } = require('./utils/db.js')
-const { verifyIdentity, EXPIRES_IN } = require('./auth.js')
-const typeDefs = require('./typeDefs.js');
-const resolvers = require('./resolvers.js')
-const dal = require('./data_access')
+const { client } = require("./utils/db.js");
+const { verifyIdentity, EXPIRES_IN } = require("./auth.js");
+const typeDefs = require("./typeDefs.js");
+const resolvers = require("./resolvers.js");
+const dal = require("./data_access");
 
 async function startServer() {
   const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -24,20 +25,27 @@ async function startServer() {
   const app = express();
   const httpServer = http.createServer(app);
 
+  // Function to get dynamic context for GraphQL server based on session cookie or authentication context
   const getDynamicContext = async (ctx, msg, args) => {
-    const { identity } = await verifyIdentity({ 
-      sessionCookie: ctx.connectionParams.sessionCookie || undefined, 
-      authorization: ctx.connectionParams.authorization || ctx.connectionParams.Authorization,
-    })
+    const { identity } = await verifyIdentity({
+      sessionCookie: ctx.connectionParams.sessionCookie || undefined,
+      authorization:
+        ctx.connectionParams.authorization ||
+        ctx.connectionParams.Authorization,
+    });
 
-    const conversations = await dal.conversation.getConversations(identity)
+    const conversations = await dal.conversation.getConversations(identity);
 
-    return { identity: identity, authorizedConversations: conversations.map(i => i.conversation_id) }
+    return {
+      identity: identity,
+      authorizedConversations: conversations.map((i) => i.conversation_id),
+    };
   };
 
+  // Create the WebSocket server
   const wsServer = new WebSocketServer({
     server: httpServer,
-    path: '/',
+    path: "/",
   });
   const serverCleanup = useServer(
     {
@@ -48,10 +56,10 @@ async function startServer() {
         return getDynamicContext(ctx, msg, args);
       },
     },
-    wsServer,
+    wsServer
   );
 
-
+  // Creating the Apollo server with plugins for proper shutdown
   const server = new ApolloServer({
     schema,
     plugins: [
@@ -71,43 +79,53 @@ async function startServer() {
     ],
   });
 
-  await server.start().then(() => console.log('server running'));
+  // Start the Apollo server
+  await server.start().then(() => console.log("server running"));
 
-  await client.connect().then(() => console.log('db connected'));
+  // Connect to the database
+  await client.connect().then(() => console.log("db connected"));
 
+  // Setting up Express middleware for GraphQL server and eanble CORS
   app.use(
-    '/',
+    "/",
     cors({
-      origin: 'http://localhost:3000',
+      origin: "http://localhost:3000",
       credentials: true,
     }),
     express.json(),
     cookieParser(),
     expressMiddleware(server, {
       context: async ({ req, res }) => {
-        if(req.headers.admin){
-          console.log(`admin user`)
-          return {identity: 'skulkarn@ucsd.edu', db: client}
+        if (req.headers.admin) {
+          console.log(`admin user`);
+          return { identity: "skulkarn@ucsd.edu", db: client };
         }
 
-        const { identity, sessionCookie } = await verifyIdentity({ 
-          sessionCookie: req.cookies.sessionCookie || undefined, 
+        const { identity, sessionCookie } = await verifyIdentity({
+          sessionCookie: req.cookies.sessionCookie || undefined,
           authorization: req.headers.authorization || req.headers.Authorization,
-        })
+        });
 
-        if(sessionCookie){
-          const options = {maxAge: EXPIRES_IN, httpOnly: false, secure: false};
-          res.cookie('sessionCookie', sessionCookie, options)
+        if (sessionCookie) {
+          const options = {
+            maxAge: EXPIRES_IN,
+            httpOnly: false,
+            secure: false,
+          };
+          res.cookie("sessionCookie", sessionCookie, options);
         }
 
-        console.log('identity verified as', identity, ' proceeding')
+        console.log("identity verified as", identity, " proceeding");
 
-        return { identity, db: client }
-      }
-    }),
+        return { identity, db: client };
+      },
+    })
   );
 
   // Modified server startup
-  httpServer.listen({ port: 4000 }, console.log(`🚀 Server ready at http://localhost:4000/`));
+  httpServer.listen(
+    { port: 4000 },
+    console.log(`🚀 Server ready at http://localhost:4000/`)
+  );
 }
-startServer()
+startServer();
