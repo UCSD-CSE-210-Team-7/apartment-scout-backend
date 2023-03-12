@@ -12,6 +12,8 @@ const queries = {
   tours: (root, args, context, info) => dal.tour.getToursByUser(args),
   // Returns the tour based on the tour_id
   tour: (root, args, context, info) => dal.tour.getTourById(args),
+  // Returns the tours based on user and tour status
+  getTours: (root, args, context, info) => dal.tour.getToursByUserAndStatus(args),
 };
 
 const mutations = {

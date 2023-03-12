@@ -22,6 +22,8 @@ const queries = `
     tours(type: UserType!, user: String!): [Tour]
 
     tour(tour_id: Int): Tour
+
+    getTours(role: String!, user: String!, status: String!): [Tour]
 `;
 
 const mutations = `
