@@ -37,11 +37,10 @@ async function getTourById({ tour_id }) {
  * @returns {Array} - An array of tour objects
  */
 async function getToursByUserAndStatus({role, user, status}){
-    const query = `SELECT * FROM Tours WHERE ${role == 'requester' ? 'requested_by' : 'scouted_by'}=$1 and status = $2 `
-    const args = [user, status]
-    const res = await client.query(query, args)
-    console.log(res.rows)
-    return res.rows
+    const query = `SELECT * FROM Tours WHERE ${role == 'requester' ? 'requested_by' : 'scouted_by'}=$1 and status = $2 `;
+    const args = [user, status];
+    const res = await client.query(query, args);
+    return res.rows;
 }
 
 /**
