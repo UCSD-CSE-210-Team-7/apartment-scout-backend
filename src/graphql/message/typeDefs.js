@@ -23,4 +23,4 @@ const subscriptions = `
   message: Message
 `;
 
-module.exports = { queries, mutations, types, subscriptions }
+module.exports = { queries, mutations, types, subscriptions };

@@ -1,10 +1,10 @@
-const resolvers = require('./resolvers.js');
-const { queries, mutations, types, subscriptions } = require('./typeDefs.js');
+const resolvers = require("./resolvers.js");
+const { queries, mutations, types, subscriptions } = require("./typeDefs.js");
 
-module.exports = { 
-    queries, 
-    mutations, 
-    resolvers, 
-    types, 
-    subscriptions 
-}
+module.exports = {
+  queries,
+  mutations,
+  resolvers,
+  types,
+  subscriptions,
+};

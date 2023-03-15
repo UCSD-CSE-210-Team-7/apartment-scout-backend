@@ -13,4 +13,4 @@ const mutations = `
 const subscriptions = `
 `;
 
-module.exports = { queries, mutations, types, subscriptions }
+module.exports = { queries, mutations, types, subscriptions };

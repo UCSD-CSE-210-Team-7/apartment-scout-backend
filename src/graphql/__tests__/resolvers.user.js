@@ -130,11 +130,13 @@ describe("User queries and mutations test", () => {
 
   it("Get conversations for the user", async () => {
     // Arrange
-    const user = {email: "abokade@ucsd.edu" };
+    const user = { email: "abokade@ucsd.edu" };
     dal.conversation.getConversations.mockReturnValueOnce(true);
     // Act
     const _ = await resolvers.User.conversations(user);
     // Assert
-    expect(dal.conversation.getConversations).toHaveBeenCalledWith("abokade@ucsd.edu");
+    expect(dal.conversation.getConversations).toHaveBeenCalledWith(
+      "abokade@ucsd.edu"
+    );
   });
 });

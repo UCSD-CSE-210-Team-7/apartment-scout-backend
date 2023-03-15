@@ -1,7 +1,7 @@
 const { DateTimeTypeDefinition } = require("graphql-scalars");
 const fs = require("fs");
 
-// Import all the GraphQL types, queries, mutations and subscriptions 
+// Import all the GraphQL types, queries, mutations and subscriptions
 // for each of the sub-directory of the graphql folder.
 const imports = fs
   .readdirSync(`${__dirname}/graphql`)

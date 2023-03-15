@@ -36,11 +36,13 @@ async function getTourById({ tour_id }) {
  * @param {string} status - The status of the tour ('COMPLETE' or 'PLANNED')
  * @returns {Array} - An array of tour objects
  */
-async function getToursByUserAndStatus({role, user, status}){
-    const query = `SELECT * FROM Tours WHERE ${role == 'requester' ? 'requested_by' : 'scouted_by'}=$1 and status = $2 `;
-    const args = [user, status];
-    const res = await client.query(query, args);
-    return res.rows;
+async function getToursByUserAndStatus({ role, user, status }) {
+  const query = `SELECT * FROM Tours WHERE ${
+    role == "requester" ? "requested_by" : "scouted_by"
+  }=$1 and status = $2 `;
+  const args = [user, status];
+  const res = await client.query(query, args);
+  return res.rows;
 }
 
 /**
@@ -109,11 +111,11 @@ async function updateTour(updateObject) {
 }
 
 module.exports = {
-    getToursByUser,
-    getTourById,
-    getToursByUserAndStatus,
-    createTour,
-    createReviewForHouse,
-    createReviewForScout,
-    updateTour,
-}
+  getToursByUser,
+  getTourById,
+  getToursByUserAndStatus,
+  createTour,
+  createReviewForHouse,
+  createReviewForScout,
+  updateTour,
+};
